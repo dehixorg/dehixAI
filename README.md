@@ -68,3 +68,16 @@ Before deploying, confirm this layout in the Vercel Root Directory:
 If your repository contains a parent `promptlens-fastify` folder, choose that folder as Vercel's Root Directory. If the files above are at the repository root, leave Root Directory at the root. GitHub web uploads must include the actual folders and files, not just the ZIP. Do not upload `.git` or `node_modules`.
 
 Commit the replacement configuration, then redeploy the latest commit. The explicit configuration and archive contents were checked locally, but a successful hosted deployment still needs to be verified in your Vercel account.
+
+## Command-line version (CLI)
+
+The same analysis is available in the terminal. No install step beyond Node.js 22, and nothing is sent anywhere.
+
+```
+node cli/index.js sample                          # try it with fictional data
+node cli/index.js analyze conversations.json      # one or more files
+node cli/index.js analyze ./exports --json        # a folder (searched recursively), JSON output
+node cli/index.js analyze ./exports --out report.txt
+```
+
+`npm run cli -- analyze <path>` works too, and `npm link` makes the `promptlens` command available globally. Supported inputs are the same as the web app: ChatGPT and Claude.ai `conversations.json`, Claude Code `.jsonl` sessions, and Gemini `MyActivity.json`. Output contains aggregates only, never prompt text. The CLI lives in `cli/` and mirrors the parsers and rules in `web/index.html`; if you change one, update the other.
